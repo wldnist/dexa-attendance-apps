@@ -1,0 +1,19 @@
+{
+  "name": "role-svc",
+  "version": "1.0.0",
+  "description": "dexa attendance apps - role service",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/adapters/transports/rest/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wldnist",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "commander": "^9.5.0",
+    "express": "^4.18.2",
+    "knex": "^2.4.1",
+    "mysql": "^2.18.1"
+  }
+}
