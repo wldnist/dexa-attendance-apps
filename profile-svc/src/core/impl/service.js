@@ -23,6 +23,8 @@ class Service extends AbstractService {
       throw DuplicateDataError;
     }
 
+    const hashedPassword = this.#hashPassword(data.password);
+
     await this.repository.create({
       // role_id: data.role_id,
       name: data.name,
@@ -33,7 +35,7 @@ class Service extends AbstractService {
 
       role: data.role,
       username: data.username,
-      password: data.password,
+      password: hashedPassword,
     });
   }
 
@@ -44,6 +46,16 @@ class Service extends AbstractService {
       throw DataNotFoundError;
     }
 
+    const password = data.password;
+    let hashedPassword = "";
+    let isPasswordNeverChanged = false;
+    if (password == existingData.password) {
+      isPasswordNeverChanged = true;
+      hashedPassword = password;
+    } else {
+      hashedPassword = this.#hashPassword(password);
+    }
+
     if (
       // existingData.role_id == data.role_id &&
       existingData.name == data.name &&
@@ -52,7 +64,7 @@ class Service extends AbstractService {
       existingData.profile_picture == data.profile_picture &&
       existingData.role == data.role &&
       existingData.username == data.username &&
-      existingData.password == data.password
+      isPasswordNeverChanged
     ) {
       return;
     }
