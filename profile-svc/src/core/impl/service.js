@@ -24,12 +24,16 @@ class Service extends AbstractService {
     }
 
     await this.repository.create({
-      role_id: data.role_id,
+      // role_id: data.role_id,
       name: data.name,
       email: data.email,
       phone: data.phone,
       profile_picture: data.profile_picture,
       created_by: data.user,
+
+      role: data.role,
+      username: data.username,
+      password: data.password,
     });
   }
 
@@ -41,24 +45,31 @@ class Service extends AbstractService {
     }
 
     if (
-      existingData.role_id == data.role_id &&
+      // existingData.role_id == data.role_id &&
       existingData.name == data.name &&
       existingData.email == data.email &&
       existingData.phone == data.phone &&
-      existingData.profile_picture == data.profile_picture
+      existingData.profile_picture == data.profile_picture &&
+      existingData.role == data.role &&
+      existingData.username == data.username &&
+      existingData.password == data.password
     ) {
       return;
     }
 
     await this.repository.update({
       id: data.id,
-      role_id: data.role_id,
+      // role_id: data.role_id,
       name: data.name,
       email: data.email,
       phone: data.phone,
       profile_picture: data.profile_picture,
       created_by: existingData.created_by,
       updated_by: data.user,
+
+      role: data.role,
+      username: data.username,
+      password: data.password,
     });
   }
 

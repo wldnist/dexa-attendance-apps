@@ -25,12 +25,16 @@ class RouteHandler {
 
   create = this.#newHandlerWithExceptionCatcher(async (req, res) => {
     const data = {
-      role_id: req.body.role_id,
+      // role_id: req.body.role_id,
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
       profile_picture: req.body.profile_picture,
       user: "user",
+
+      role: req.body.role,
+      username: req.body.username,
+      password: req.body.password,
     };
 
     await this.service.create(data);
@@ -43,11 +47,16 @@ class RouteHandler {
   update = this.#newHandlerWithExceptionCatcher(async (req, res) => {
     const data = {
       id: req.params.id,
+      // role_id: req.body.role_id,
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone,
       profile_picture: req.body.profile_picture,
       user: "user",
+
+      role: req.body.role,
+      username: req.body.username,
+      password: req.body.password,
     };
 
     await this.service.update(data);
