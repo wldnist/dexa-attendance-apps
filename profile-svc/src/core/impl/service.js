@@ -1,5 +1,6 @@
 import { DataNotFoundError, DuplicateDataError } from "../../../../user-svc/src/core/ports/error.js";
 import AbstractService from "../ports/service.js";
+import bcrypt from "bcrypt";
 
 class Service extends AbstractService {
   constructor(repository) {
@@ -87,6 +88,10 @@ class Service extends AbstractService {
 
   async delete(id) {
     await this.repository.delete(id);
+  }
+
+  #hashPassword(password) {
+    return bcrypt.hashSync(password, 10);
   }
 }
 

@@ -26,7 +26,6 @@ class RouteHandler {
   });
   
   getCurrentAttendance = this.#newHandlerWithExceptionCatcher(async (req, res) => {
-    console.log("getCurrentAttendance");
     const attendance = await this.service.getCurrentAttendance(req.body.user_id);
 
     res.json({

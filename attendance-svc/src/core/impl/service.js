@@ -16,7 +16,6 @@ class Service extends AbstractService {
   }
 
   async getCurrentAttendance(userId) {
-    console.log("currentDate");
     return this.repository.getCurrentAttendance(userId);
   }
 

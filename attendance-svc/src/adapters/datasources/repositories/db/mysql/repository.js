@@ -52,7 +52,6 @@ class Repository extends AbstractRepository {
 
   async getCurrentAttendance(userId) {
     const currentDate = this.#getCurrentDate();
-    console.log(currentDate);
     const result = await this.dbClient
       .table("attendances")
       .where("user_id", userId)
