@@ -5,19 +5,19 @@ class AbstractRestWrapper {
     }
   }
 
-  async get(params) {
+  async get(path, params) {
     throw new Error("Method 'get()' must be implemented.");
   }
 
-  async post(params, data) {
+  async post(path, params, data) {
     throw new Error("Method 'post()' must be implemented.");
   }
 
-  async put(params, data) {
+  async put(path, params, data) {
     throw new Error("Method 'put()' must be implemented.");
   }
 
-  async delete(params) {
+  async delete(path, params) {
     throw new Error("Method 'delete()' must be implemented.");
   }
 }

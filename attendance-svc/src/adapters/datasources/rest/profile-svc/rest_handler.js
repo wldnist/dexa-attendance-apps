@@ -8,7 +8,17 @@ class RestHandler {
 
     async getProfiles(params) {
       try {
-        return await this.restWrapper.get(params);
+        const path = '/';
+        return await this.restWrapper.get(path, params);
+      } catch (error) {
+        return error;
+      }
+    }
+    
+    async getProfileById(id, params) {
+      try {
+        const path = '/' + id;
+        return await this.restWrapper.get(path, params);
       } catch (error) {
         return error;
       }

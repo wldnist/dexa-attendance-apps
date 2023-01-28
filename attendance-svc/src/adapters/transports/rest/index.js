@@ -3,6 +3,7 @@ import Repository from "../../datasources/db/mysql/repository.js";
 import Service from "../../../core/impl/service.js";
 import RouteHandler from "./route_handler.js";
 import middleware from "./middleware.js";
+import cors from "cors";
 
 const app = express();
 const port = 3004;
@@ -12,6 +13,8 @@ app.use(express.json());
 const repository = new Repository();
 const service = new Service(repository);
 const routeHandler = new RouteHandler(service);
+
+app.use(cors())
 
 app.get("/attendances", (...args) => routeHandler.list(...args));
 app.get("/attendances/:id", (...args) => routeHandler.get(...args));

@@ -38,16 +38,49 @@ class Service extends AbstractService {
 
     return listAttendance.map((attendance) => ({
       ...attendance,
+      attendance_date: this.#formatDate(attendance.attendance_date),
       profile: restructuredListProfile[attendance.profile_id],
     }));
   }
 
   async get(id) {
-    return this.repository.get(id);
+    const attendance = await this.repository.get(id);
+    if (!attendance) {
+      return attendance;
+    }
+
+    let profile = {};
+    try {
+      const getProfileByIdRes = await this.profileSvcRestHandler.getProfileById(attendance.profile_id, {});
+      profile = getProfileByIdRes.data.profile;
+    } catch (error) {
+      return attendance;
+    }
+
+    return {
+      ...attendance,
+      profile: profile,
+    };
   }
 
   async getCurrentAttendance(profileId) {
-    return this.repository.getCurrentAttendance(profileId);
+    const attendance = await this.repository.getCurrentAttendance(profileId);
+    if (!attendance) {
+      return attendance;
+    }
+
+    let profile = {};
+    try {
+      const getProfileByIdRes = await this.profileSvcRestHandler.getProfileById(attendance.profile_id, {});
+      profile = getProfileByIdRes.data.profile;
+    } catch (error) {
+      return attendance;
+    }
+
+    return {
+      ...attendance,
+      profile: profile,
+    };
   }
 
   async upsert(data) {
@@ -68,6 +101,16 @@ class Service extends AbstractService {
         attendance_out: data.attendance_time,
       });
     }
+  }
+
+  #formatDate(d) {
+    const currentDate = new Date(d);
+
+    let date = ("0" + currentDate.getDate()).slice(-2);
+    let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    let year = currentDate.getFullYear();
+
+    return `${year}-${month}-${date}`;
   }
 }
 

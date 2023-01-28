@@ -8,9 +8,9 @@ class RestWrapper extends AbstractRestWrapper {
     this.externalServiceUrl = externalServiceUrl;
   }
 
-  async get(params) {
+  async get(path, params) {
     return await axios
-      .get(this.externalServiceUrl, { params: params })
+      .get(this.externalServiceUrl + path, { params: params })
       .then(function (response) {
         return response;
       })
@@ -19,9 +19,9 @@ class RestWrapper extends AbstractRestWrapper {
       });
   }
 
-  async post(params, data) {
+  async post(path, params, data) {
     return await axios
-      .post(this.externalServiceUrl, {
+      .post(this.externalServiceUrl + path, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,9 +36,9 @@ class RestWrapper extends AbstractRestWrapper {
       });
   }
 
-  async put(params, data) {
+  async put(path, params, data) {
     return await axios
-      .put(this.externalServiceUrl, {
+      .put(this.externalServiceUrl + path, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -53,9 +53,9 @@ class RestWrapper extends AbstractRestWrapper {
       });
   }
 
-  async delete(params) {
+  async delete(path, params) {
     return await axios
-      .delete(this.externalServiceUrl, { params: params })
+      .delete(this.externalServiceUrl + path, { params: params })
       .then(function (response) {
         return response;
       })

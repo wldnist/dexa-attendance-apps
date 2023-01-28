@@ -19,11 +19,11 @@ class Repository extends AbstractRepository {
     const currentDate = this.#getCurrentDate();
     let startDate = data.start_date;
     let endDate = data.end_date;
-    if (startDate == "") {
+    if (!startDate) {
       startDate = currentDate;
     }
 
-    if (endDate == "") {
+    if (!endDate) {
       endDate = currentDate;
     }
 

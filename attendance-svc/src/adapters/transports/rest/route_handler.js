@@ -5,9 +5,9 @@ class RouteHandler {
 
   list = this.#newHandlerWithExceptionCatcher(async (req, res) => {
     const data = {
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
-      profile_id: req.body.profile_id,
+      start_date: req.query.start_date,
+      end_date: req.query.end_date,
+      profile_id: req.query.profile_id,
     };
 
     const attendances = await this.service.list(data);
@@ -26,7 +26,7 @@ class RouteHandler {
   });
   
   getCurrentAttendance = this.#newHandlerWithExceptionCatcher(async (req, res) => {
-    const attendance = await this.service.getCurrentAttendance(req.body.profile_id);
+    const attendance = await this.service.getCurrentAttendance(req.query.profile_id);
 
     res.json({
       attendance,
