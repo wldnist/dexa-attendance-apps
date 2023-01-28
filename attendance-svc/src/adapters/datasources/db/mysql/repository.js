@@ -2,8 +2,8 @@ import knex from "knex";
 import {
   DataNotFoundError,
   DuplicateDataError,
-} from "../../../../../core/ports/error.js";
-import AbstractRepository from "../../../../../core/ports/repository.js";
+} from "../../../../core/ports/error.js";
+import AbstractRepository from "../../../../core/ports/repository.js";
 import knexconfig from "./knexfile.js";
 
 class Repository extends AbstractRepository {
@@ -32,8 +32,8 @@ class Repository extends AbstractRepository {
       .where("attendance_date", ">=", startDate)
       .where("attendance_date", "<=", endDate);
 
-    if (data?.user_id) {
-      queryBuilder.where("user_id", data.user_id);
+    if (data?.profile_id) {
+      queryBuilder.where("profile_id", data.profile_id);
     }
 
     const result = await queryBuilder.select();
@@ -50,11 +50,11 @@ class Repository extends AbstractRepository {
     return result;
   }
 
-  async getCurrentAttendance(userId) {
+  async getCurrentAttendance(profileId) {
     const currentDate = this.#getCurrentDate();
     const result = await this.dbClient
       .table("attendances")
-      .where("user_id", userId)
+      .where("profile_id", profileId)
       .where("attendance_date", currentDate)
       .first();
 

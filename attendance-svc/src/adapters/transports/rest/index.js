@@ -1,5 +1,5 @@
 import express from "express";
-import Repository from "../../datasources/repositories/db/mysql/repository.js";
+import Repository from "../../datasources/db/mysql/repository.js";
 import Service from "../../../core/impl/service.js";
 import RouteHandler from "./route_handler.js";
 import middleware from "./middleware.js";

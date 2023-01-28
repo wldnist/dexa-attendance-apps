@@ -13,7 +13,7 @@ class AbstractService {
     throw new Error("Method 'get()' must be implemented.");
   }
   
-  async getCurrentAttendance(userId) {
+  async getCurrentAttendance(profileId) {
     throw new Error("Method 'getCurrentAttendance()' must be implemented.");
   }
 

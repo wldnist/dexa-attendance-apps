@@ -50,11 +50,13 @@ class Service extends AbstractService {
     const password = data.password;
     let hashedPassword = "";
     let isPasswordNeverChanged = false;
-    if (password == existingData.password) {
-      isPasswordNeverChanged = true;
-      hashedPassword = password;
-    } else {
-      hashedPassword = this.#hashPassword(password);
+    if (password != "" && password != undefined) {
+      if (password == existingData.password) {
+        isPasswordNeverChanged = true;
+        hashedPassword = password;
+      } else {
+        hashedPassword = this.#hashPassword(password);
+      }
     }
 
     if (
@@ -70,7 +72,7 @@ class Service extends AbstractService {
       return;
     }
 
-    await this.repository.update({
+    let profile = {
       id: data.id,
       // role_id: data.role_id,
       name: data.name,
@@ -82,8 +84,13 @@ class Service extends AbstractService {
 
       role: data.role,
       username: data.username,
-      password: data.password,
-    });
+    };
+
+    if (password != "" && password != undefined) {
+      profile.password = hashedPassword;
+    }
+
+    await this.repository.update(profile);
   }
 
   async delete(id) {

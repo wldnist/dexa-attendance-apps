@@ -5,7 +5,8 @@ class RouteHandler {
 
   list = this.#newHandlerWithExceptionCatcher(async (req, res) => {
     const data = {
-      name: req.body.name,
+      name: req.query.name,
+      ids: req.query.ids,
     };
 
     const profiles = await this.service.list(data);

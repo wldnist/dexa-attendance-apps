@@ -2,8 +2,8 @@ import knex from "knex";
 import {
   DataNotFoundError,
   DuplicateDataError,
-} from "../../../../../core/ports/error.js";
-import AbstractRepository from "../../../../../core/ports/repository.js";
+} from "../../../../core/ports/error.js";
+import AbstractRepository from "../../../../core/ports/repository.js";
 import knexconfig from "./knexfile.js";
 
 class Repository extends AbstractRepository {
@@ -19,6 +19,10 @@ class Repository extends AbstractRepository {
     const queryBuilder = this.dbClient.table("profiles");
     if (data.name) {
       queryBuilder.where("name", data.name);
+    }
+
+    if (data.ids) {
+      queryBuilder.whereIn('id', data.ids);
     }
 
     const result = await queryBuilder.select();

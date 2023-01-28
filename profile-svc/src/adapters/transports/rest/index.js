@@ -1,5 +1,5 @@
 import express from "express";
-import Repository from "../../datasources/repositories/db/mysql/repository.js";
+import Repository from "../../datasources/db/mysql/repository.js";
 import Service from "../../../core/impl/service.js";
 import RouteHandler from "./route_handler.js";
 import middleware from "./middleware.js";
@@ -23,10 +23,6 @@ app.put("/profiles/:id", (...args) => routeHandler.update(...args));
 app.delete("/profiles/:id", (...args) => routeHandler.delete(...args));
 
 app.use(middleware.errorHandler);
-
-// app.use(cors({
-//   origin: 'http://127.0.0.1:3000',
-// }))
 
 app.listen(port, () => {
   console.log(`listen from port ${port}`);
