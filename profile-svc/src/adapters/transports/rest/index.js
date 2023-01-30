@@ -21,6 +21,7 @@ app.get("/profiles/:id", (...args) => routeHandler.get(...args));
 app.post("/profiles", (...args) => routeHandler.create(...args));
 app.put("/profiles/:id", (...args) => routeHandler.update(...args));
 app.delete("/profiles/:id", (...args) => routeHandler.delete(...args));
+app.post("/profiles/login", (...args) => routeHandler.login(...args));
 
 app.use(middleware.errorHandler);
 

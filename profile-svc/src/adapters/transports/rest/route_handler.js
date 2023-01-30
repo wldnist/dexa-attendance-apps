@@ -75,6 +75,19 @@ class RouteHandler {
     });
   });
 
+  login = this.#newHandlerWithExceptionCatcher(async (req, res) => {
+    const data = {
+      username: req.body.username,
+      password: req.body.password,
+    };
+
+    const profile = await this.service.login(data);
+
+    res.json({
+      profile,
+    });
+  });
+
   #newHandlerWithExceptionCatcher(handlerFunc) {
     return async (req, res, next) => {
       try {

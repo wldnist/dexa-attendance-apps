@@ -1,6 +1,6 @@
-import { DataNotFoundError, DuplicateDataError } from "../../../../user-svc/src/core/ports/error.js";
+import { DataNotFoundError, DuplicateDataError } from "../../../../profile-svc/src/core/ports/error.js";
 import AbstractService from "../ports/service.js";
-import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 class Service extends AbstractService {
   constructor(repository) {
@@ -97,8 +97,27 @@ class Service extends AbstractService {
     await this.repository.delete(id);
   }
 
+  async login(data) {
+    const hashedPassword = this.#hashPassword(data.password);
+    console.log("password login : ", hashedPassword);
+    const profile = await this.repository.getProfileByCredentials({
+      username: data.username,
+      password: hashedPassword
+    });
+    
+    if (!profile) {
+      throw DataNotFoundError;
+    }
+
+    return {
+      ...profile,
+      token: crypto.randomBytes(64).toString('hex'),
+    };
+  }
+
   #hashPassword(password) {
-    return bcrypt.hashSync(password, 10);
+    // return bcrypt.hashSync(password, 10);
+    return crypto.createHash('md5').update(password).digest('hex');
   }
 }
 

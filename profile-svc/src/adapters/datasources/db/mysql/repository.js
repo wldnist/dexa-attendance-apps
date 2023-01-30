@@ -71,6 +71,16 @@ class Repository extends AbstractRepository {
       throw DataNotFoundError;
     }
   }
+
+  async getProfileByCredentials(data) {
+    const result = await this.dbClient
+    .table("profiles")
+    .where("username", data.username)
+    .where("password", data.password)
+    .first();
+
+    return result;
+  }
 }
 
 export default Repository;

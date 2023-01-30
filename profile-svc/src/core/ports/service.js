@@ -24,6 +24,10 @@ class AbstractService {
   async delete(id) {
     throw new Error("Method 'delete()' must be implemented.");
   }
+
+  async login(data) {
+    throw new Error("Method 'login()' must be implemented.");
+  }
 }
 
 export default AbstractService;

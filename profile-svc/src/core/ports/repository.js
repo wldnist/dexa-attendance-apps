@@ -24,6 +24,10 @@ class AbstractRepository {
   async delete(id) {
     throw new Error("Method 'delete()' must be implemented.");
   }
+
+  async getProfileByCredentials(data) {
+    throw new Error("Method 'getProfileByCredentials()' must be implemented.");
+  }
 }
 
 export default AbstractRepository;

@@ -1,5 +1,6 @@
 import AbstractService from "../ports/service.js";
 import ProfileSvcRestHandler from "../../adapters/datasources/rest/profile-svc/rest_handler.js";
+import Helper from "../helpers/helper.js";
 
 class Service extends AbstractService {
   constructor(repository) {
@@ -38,7 +39,7 @@ class Service extends AbstractService {
 
     return listAttendance.map((attendance) => ({
       ...attendance,
-      attendance_date: this.#formatDate(attendance.attendance_date),
+      attendance_date: Helper.formatDate(attendance.attendance_date),
       profile: restructuredListProfile[attendance.profile_id],
     }));
   }
@@ -101,16 +102,6 @@ class Service extends AbstractService {
         attendance_out: data.attendance_time,
       });
     }
-  }
-
-  #formatDate(d) {
-    const currentDate = new Date(d);
-
-    let date = ("0" + currentDate.getDate()).slice(-2);
-    let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-    let year = currentDate.getFullYear();
-
-    return `${year}-${month}-${date}`;
   }
 }
 

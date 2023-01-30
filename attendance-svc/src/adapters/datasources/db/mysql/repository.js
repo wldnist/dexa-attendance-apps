@@ -5,6 +5,7 @@ import {
 } from "../../../../core/ports/error.js";
 import AbstractRepository from "../../../../core/ports/repository.js";
 import knexconfig from "./knexfile.js";
+import Helper from "../../../../core/helpers/helper.js";
 
 class Repository extends AbstractRepository {
   constructor() {
@@ -16,21 +17,15 @@ class Repository extends AbstractRepository {
   }
 
   async list(data) {
-    const currentDate = this.#getCurrentDate();
-    let startDate = data.start_date;
-    let endDate = data.end_date;
-    if (!startDate) {
-      startDate = currentDate;
+    const queryBuilder = this.dbClient.table("attendances");
+    const isValidStartDate = Helper.isValidDate(data.start_date);
+    const isValidEndDate = Helper.isValidDate(data.end_date);
+    if (isValidStartDate && isValidEndDate) {
+      const startDate = Helper.formatDate(data.start_date);
+      const endDate = Helper.formatDate(data.end_date);
+      queryBuilder.where("attendance_date", ">=", startDate);
+      queryBuilder.where("attendance_date", "<=", endDate);
     }
-
-    if (!endDate) {
-      endDate = currentDate;
-    }
-
-    const queryBuilder = this.dbClient
-      .table("attendances")
-      .where("attendance_date", ">=", startDate)
-      .where("attendance_date", "<=", endDate);
 
     if (data?.profile_id) {
       queryBuilder.where("profile_id", data.profile_id);
@@ -51,7 +46,7 @@ class Repository extends AbstractRepository {
   }
 
   async getCurrentAttendance(profileId) {
-    const currentDate = this.#getCurrentDate();
+    const currentDate = Helper.getCurrentDate();
     const result = await this.dbClient
       .table("attendances")
       .where("profile_id", profileId)
@@ -84,16 +79,6 @@ class Repository extends AbstractRepository {
     if (updatedDataCount === 0) {
       throw DataNotFoundError;
     }
-  }
-
-  #getCurrentDate() {
-    const currentDate = new Date();
-
-    let date = ("0" + currentDate.getDate()).slice(-2);
-    let month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
-    let year = currentDate.getFullYear();
-
-    return `${year}-${month}-${date}`;
   }
 }
 
